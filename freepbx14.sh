@@ -17,11 +17,11 @@ firewall-cmd --reload
 wait ${!}
 
 
-yum -y install lynx tftp-server unixODBC mysql-connector-odbc mariadb-server mariadb \
-  httpd ncurses-devel sendmail sendmail-cf sox newt-devel libxml2-devel libtiff-devel \
-  audiofile-devel gtk2-devel subversion kernel-devel git crontabs cronie \
-  cronie-anacron wget vim uuid-devel sqlite-devel net-tools gnutls-devel python-devel texinfo \
-  libuuid-devel
+yum -y install lynx tftp-server unixODBC mysql-connector-odbc mariadb-server mariadb 
+yum -y install  httpd ncurses-devel sendmail sendmail-cf sox newt-devel libxml2-devel libtiff-devel 
+yum -y install  audiofile-devel gtk2-devel subversion kernel-devel git crontabs cronie 
+yum -y install  cronie-anacron wget vim uuid-devel sqlite-devel net-tools gnutls-devel python-devel texinfo 
+yum -y install libuuid-devel
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 yum -y remove php*
