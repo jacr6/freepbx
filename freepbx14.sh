@@ -109,6 +109,7 @@ wait ${!}
 
 adduser asterisk -M -c "Asterisk User"
 mkhomedir_helper asterisk
+
 cd /usr/src
 rm -rf asterisk*
 tar xvfz asterisk-14-current.tar.gz
@@ -117,6 +118,7 @@ cd asterisk-*
 contrib/scripts/install_prereq install
 ./configure --libdir=/usr/lib64 --with-pjproject-bundled
 contrib/scripts/get_mp3_source.sh
+make menuselect.makeopts
 wait ${!}
 
 
@@ -152,4 +154,41 @@ cd freepbx
 ./install -n
 wait ${!}
 
+wget -P /etc/yum.repos.d/ -N http://yum.schmoozecom.net/schmooze-commercial/schmooze-commercial.repo
+yum clean all
+yum -y install sysadmin fail2ban incron ImageMagick
+/var/lib/asterisk/bin/freepbx_setting MODULE_REPO http://mirror1.freepbx.org,http://mirror2.freepbx.org
+
+#Harden Apache
+sed -i -e 's/ServerSignature On/ServerSignature Off/g' /etc/httpd/conf/httpd.conf
+sed -i -e 's/ServerTokens OS/ServerTokens Prod/g' /etc/httpd/conf/httpd.conf
+
+service httpd restart
+wait ${!}
+fwconsole ma download sysadmin
+fwconsole ma install sysadmin
+
+#Author add
+fwconsole ma enablerepo extended
+fwconsole ma enablerepo commercial
+mkdir /tftpboot
+chown -R asterisk:asterisk /tftpboot
+chown -R asterisk:asterisk /var/log/asterisk
+chown -R asterisk:asterisk /var/run/asterisk
+chown -R asterisk:asterisk /var/lib/asterisk
+chown -R asterisk:asterisk /var/log/asterisk/*
+chown -R asterisk:asterisk /var/run/asterisk/*
+chown -R asterisk:asterisk /var/lib/asterisk/*
+
+# Set up automatic FreePBX and OS updates
+cd /usr/bin
+git clone https://github.com/vasicit/freepbx.git
+chmod +x /usr/bin/freepbx/*.sh
+echo '0 3 * * * /usr/bin/freepbx/freepbx-update.sh' >> /var/spool/cron/root
+echo '0 4 * * * /usr/bin/freepbx/centos-update.sh' >> /var/spool/cron/root
+echo '@reboot /usr/bin/freepbx/freepbx-maint.sh' >> /var/spool/cron/root
+wait ${!}
+
+sleep 10
+reboot
 
