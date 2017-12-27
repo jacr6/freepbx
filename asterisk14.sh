@@ -88,7 +88,7 @@ adduser asterisk -M -c "Asterisk User"
 mkhomedir_helper asterisk
 
 cd /usr/src
-rm -rf asterisk*
+
 tar xvfz asterisk-14-current.tar.gz
 rm -f asterisk-14-current.tar.gz
 cd asterisk-*
