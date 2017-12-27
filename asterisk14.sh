@@ -38,13 +38,6 @@ mysql_secure_installation
 
 wait ${!}
 
-pear install Console_Getopt
-wait ${!}
-
-
-
-
-
 cd /usr/src
 wget http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
 wget http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz
