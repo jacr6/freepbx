@@ -122,11 +122,6 @@ wait ${!}
 systemctl restart httpd.service
 wait ${!}
 
-
-wget -P /etc/yum.repos.d/ -N http://yum.schmoozecom.net/schmooze-commercial/schmooze-commercial.repo
-yum clean all
-yum -y install sysadmin fail2ban incron ImageMagick
-
 service httpd restart
 wait ${!}
 
