@@ -144,4 +144,4 @@ systemctl enable asterisk.service
 systemctl start asterisk.service
 
 sleep 10
-reboott
+echo "LISTO ASTERISK 14"
